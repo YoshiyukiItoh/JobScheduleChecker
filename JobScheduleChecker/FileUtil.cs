@@ -50,6 +50,7 @@ namespace JobScheduleChecker
 
         private void MoveFile(string srcPath, string destPath)
         {
+            // TODO すでにあったら上書くオプション付与
             logger.Info(String.Format("Move : {0} -> {1}", srcPath, destPath));
             File.Move(srcPath, destPath);
         }
