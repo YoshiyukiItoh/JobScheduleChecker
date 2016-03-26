@@ -39,7 +39,7 @@ namespace JobScheduleChecker
 
             watcher = new System.IO.FileSystemWatcher();
             //監視するディレクトリを指定
-            watcher.Path = @"C:\My Documents";
+            watcher.Path = @"C:\Schedule";
             //最終アクセス日時、最終更新日時、ファイル、フォルダ名の変更を監視する
             watcher.NotifyFilter =
                 (System.IO.NotifyFilters.LastAccess
@@ -67,7 +67,7 @@ namespace JobScheduleChecker
             //Console.WriteLine("監視を終了しました。");
         }
 
-        private void watcher_Changed(System.Object source, System.IO.FileSystemEventArgs e)
+        private void watcher_Changed(Object source, FileSystemEventArgs e)
         {
             switch (e.ChangeType)
             {
