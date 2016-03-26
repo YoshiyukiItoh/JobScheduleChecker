@@ -48,6 +48,9 @@ namespace JobScheduleChecker
             sr.Close();
         }
 
-
+        public Settings GetConfig()
+        {
+            return appSettings;
+        }
     }
 }
