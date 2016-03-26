@@ -3,7 +3,7 @@ using System.IO;
 
 namespace JobScheduleChecker
 {
-    class Program
+    class Program : Base
     {
         // TODO log4j
 
@@ -19,9 +19,9 @@ namespace JobScheduleChecker
         static void Main(string[] args)
         {
             Program exec = new Program();
-            FileUtil fu = new FileUtil();
             try
             {
+                ConfigUtil configUtil = new ConfigUtil();
                 //fu.DecryptFile(@"C:\Users\yoshi\Desktop\個人別作業予定_20160328v1-xlsx.axx");
                 //exec.Run();
             }
