@@ -13,6 +13,6 @@ namespace JobScheduleChecker
             = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         public static readonly string config_filePath
             = Path.Combine(exec_path,"settings.config");
-        public static string passphrase = String.Empty;
+        public static string passphrase = string.Empty;
     }
 }
