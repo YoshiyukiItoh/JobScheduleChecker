@@ -11,9 +11,9 @@ namespace JobScheduleChecker
 
         public Program()
         {
-            Init_fw();
-            ConfigInit();
-            FileInit();
+                Init_fw();
+                ConfigInit();
+                FileInit();
         }
 
         static void Main(string[] args)
@@ -83,8 +83,8 @@ namespace JobScheduleChecker
             switch (e.ChangeType)
             {
                 case System.IO.WatcherChangeTypes.Created:
-                    Console.WriteLine(
-                        "ファイル 「" + e.FullPath + "」が作成されました。");
+                    logger.Info("ファイル 「" + e.FullPath + "」が作成されました。");
+                    fileUtil.divideProcess(e.FullPath);
                     break;
                 default:
                     logger.Error(String.Format("監視外のイベントが発生しました。: {0}", e.ChangeType));
@@ -96,6 +96,9 @@ namespace JobScheduleChecker
         {
             ConfigUtil configUtil = new ConfigUtil();
             appSettings = configUtil.GetConfig();
+            Common.monitor_path = appSettings.MonitorPath;
+            Common.dest_path = appSettings.DestPath;
+            Common.target_file = appSettings.TargetFile;
             Common.passphrase = appSettings.Passphrase;
         }
 
