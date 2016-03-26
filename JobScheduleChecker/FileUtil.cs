@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace JobScheduleChecker
 {
-    class FileUtil
+    class FileUtil : Base
     {
         public FileUtil() { }
 
@@ -25,17 +25,20 @@ namespace JobScheduleChecker
 
         private void MoveFile(string srcPath, string destPath)
         {
+            logger.Info(String.Format("Move {0} -> {1}",srcPath,destPath));
             File.Move(srcPath,destPath);
         }
 
         public void DecryptFile(string passphrase, string filename)
         {
             string arg = String.Format("-d -k \"{0}\" {1}", passphrase,filename);
+            logger.Info(String.Format("Decrypt File : {0}", filename));
             ExecCmd("Axcrypt", arg);
         }
 
         private void ExecCmd(string cmd, string arg)
         {
+            logger.Info(String.Format("Exec command : {0} {1}",cmd,arg));
             Process.Start(cmd, arg);
         }
     }
