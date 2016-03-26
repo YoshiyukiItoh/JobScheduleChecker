@@ -28,9 +28,9 @@ namespace JobScheduleChecker
             File.Move(srcPath,destPath);
         }
 
-        public void DecryptFile(string filename)
+        public void DecryptFile(string passphrase, string filename)
         {
-            string arg = String.Format("-d -k \"55555\" {0}", filename);
+            string arg = String.Format("-d -k \"{0}\" {1}", passphrase,filename);
             ExecCmd("Axcrypt", arg);
         }
 
