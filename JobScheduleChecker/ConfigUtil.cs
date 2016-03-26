@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using System.IO;
 using System.Xml.Serialization;
 using System.Windows.Forms;
@@ -28,7 +29,7 @@ namespace JobScheduleChecker
                 CreateConfig();
                 MessageBox.Show("create conig\r\nplwase edit the config.");
                 logger.Info("create conig file. plwase edit the config file.");
-                Application.Exit();
+                Environment.Exit(0);
             }
         }
 
