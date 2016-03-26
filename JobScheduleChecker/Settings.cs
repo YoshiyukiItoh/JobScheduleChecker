@@ -17,7 +17,7 @@ namespace JobScheduleChecker
         }
         public Settings()
         {
-            _passphrase = "";
+            _passphrase = "XXXXX";
         }
     }
 }
