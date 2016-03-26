@@ -19,7 +19,6 @@ namespace JobScheduleChecker
         static void Main(string[] args)
         {
             new Program().Run();
-            //Console.WriteLine("aaa");
         }
 
         private void Run()
