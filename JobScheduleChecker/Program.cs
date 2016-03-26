@@ -5,33 +5,38 @@ namespace JobScheduleChecker
 {
     class Program : Base
     {
-        // TODO log4j
-
-        FileSystemWatcher watcher = null;
-        string moniter_path;
-        string mv_dest_path;
+        private FileSystemWatcher watcher = null;
+        private FileUtil fileUtil;
+        private Settings appSettings;
 
         public Program()
         {
             Init_fw();
+            ConfigInit();
+            FileInit();
         }
 
         static void Main(string[] args)
         {
-            Program exec = new Program();
+            new Program().Run();
+            //Console.WriteLine("aaa");
+        }
+
+        private void Run()
+        {
             try
             {
-                ConfigUtil configUtil = new ConfigUtil();
-                //fu.DecryptFile(@"C:\Users\yoshi\Desktop\個人別作業予定_20160328v1-xlsx.axx");
-                //exec.Run();
+                //watcher.EnableRaisingEvents = true;
+                logger.Info("監視を開始しました。");
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.StackTrace);
+                logger.Error(String.Format("StackTrace : {0}", e.StackTrace));
+                logger.Error(String.Format("Message : {0}", e.Message));
             }
             finally
             {
-                exec.Exit_fw();
+                Exit_fw();
             }
         }
 
@@ -55,37 +60,49 @@ namespace JobScheduleChecker
             watcher.Created += new System.IO.FileSystemEventHandler(watcher_Changed);
         }
 
-        private void Run()
-        {
-            watcher.EnableRaisingEvents = true;
-            //Console.WriteLine("監視を開始しました。");
-        }
-
         private void Exit_fw()
         {
-            watcher.EnableRaisingEvents = false;
-            watcher.Dispose();
-            watcher = null;
-            //Console.WriteLine("監視を終了しました。");
+            try
+            {
+                if (watcher != null)
+                {
+                    watcher.EnableRaisingEvents = false;
+                    watcher.Dispose();
+                    watcher = null;
+                }
+                logger.Info("監視を終了しました。");
+            }
+            catch (Exception e)
+            {
+                logger.Error(String.Format("StackTrace : {0}", e.StackTrace));
+                logger.Error(String.Format("Message : {0}", e.Message));
+            }
         }
 
         private void watcher_Changed(Object source, FileSystemEventArgs e)
         {
             switch (e.ChangeType)
             {
-                case System.IO.WatcherChangeTypes.Changed:
-                    Console.WriteLine(
-                        "ファイル 「" + e.FullPath + "」が変更されました。");
-                    break;
                 case System.IO.WatcherChangeTypes.Created:
                     Console.WriteLine(
                         "ファイル 「" + e.FullPath + "」が作成されました。");
                     break;
-                case System.IO.WatcherChangeTypes.Deleted:
-                    Console.WriteLine(
-                        "ファイル 「" + e.FullPath + "」が削除されました。");
+                default:
+                    logger.Error(String.Format("監視外のイベントが発生しました。: {0}", e.ChangeType));
                     break;
             }
+        }
+
+        private void ConfigInit()
+        {
+            ConfigUtil configUtil = new ConfigUtil();
+            appSettings = configUtil.GetConfig();
+            Common.passphrase = appSettings.Passphrase;
+        }
+
+        private void FileInit()
+        {
+            fileUtil = new FileUtil();
         }
     }
 }
